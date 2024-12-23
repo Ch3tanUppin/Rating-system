@@ -1,5 +1,6 @@
 package com.user.service.UserService.entites;
 
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,18 +8,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rating {
-
-    private String ratingId;
-
-    private String userId;
-
+public class Hotel {
+    @Id
     private String hotelId;
 
-    private Integer rating;
+    private String hotelName;
 
-    private String feedback;
+    private String hotelLocation;
 
-    private Hotel hotel;
-    
+    private String aboutHotel;
 }
