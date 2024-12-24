@@ -14,6 +14,7 @@ import com.user.service.UserService.entites.Hotel;
 import com.user.service.UserService.entites.Rating;
 import com.user.service.UserService.entites.User;
 import com.user.service.UserService.execption.ResourceNotFound;
+import com.user.service.UserService.external.service.HotelService;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private HotelService hotelService;
     
     private Logger logger=LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -53,10 +57,10 @@ public class UserServiceImpl implements UserService{
         List<Rating> ratingList = ratings.stream().map(rating -> {
             //api call
             //http://localhost:8082/Hotels/
-            ResponseEntity<Hotel> forEntity = restTemplate.getForEntity("http://HOTELSERVICE/Hotels/"+rating.getHotelId(), Hotel.class);
-            Hotel hotel = forEntity.getBody();
-            logger.info("response status code{} ", forEntity.getStatusCode());
-
+            //ResponseEntity<Hotel> forEntity = restTemplate.getForEntity("http://HOTELSERVICE/Hotels/"+rating.getHotelId(), Hotel.class);
+            Hotel hotel = hotelService.getHotel(rating.getHotelId());
+            //Hotel hotel = forEntity.getBody();
+            //logger.info("response status code{} ", forEntity.getStatusCode());
             //set the hotel
             rating.setHotel(hotel);
 
